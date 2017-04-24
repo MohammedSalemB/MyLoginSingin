@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyLoginTest</string>
+    <string name="empty_email">Email is Require</string>
+    <string name="non_valid_email">Email not valid..try again</string>
+    <string name="empty_password">Ppassword valid is required</string>
+    <string name="non_valid_password">short password..try more then 7 charcaters</string>
+    <string name="login_dialog_message">Loading..</string>
+    <string name="login_dialog_title">wait..</string>
+    <string name="login_dialog_cancle_button">Cancle</string>
+</resources>

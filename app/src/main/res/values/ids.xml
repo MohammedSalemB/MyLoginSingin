@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="email_edit_text" type="id" />
+    <item name="password_edit_text" type="id" />
+    <item name="email_text_input_layout" type="id" />
+    <item name="password_text_input_layout" type="id" />
+    <item name="submit_button" type="id" />
+    <item name="username_text_input_layout" type="id" />
+    <item name="first_name_text_input_layout" type="id" />
+    <item name="last_name_text_input_layout" type="id" />
+    <item name="mobile_text_input_layout" type="id" />
+    <item name="confirm_password_text_input_layout" type="id" />
+    <item name="username_edit_text" type="id" />
+    <item name="first_name_edit_text" type="id" />
+    <item name="last_name_edit_text" type="id" />
+    <item name="mobile_edit_text" type="id" />
+    <item name="confirm_password_edit_text" type="id" />
+    <item name="forget_password_text_view" type="id" />
+</resources>

@@ -1,6 +1,7 @@
 package com.example.capps.mylogintest;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -23,6 +24,27 @@ public class MyUtils {
         if (instance == null)
             instance = new MyUtils(context);
         return instance;
+    }
+
+
+    public boolean isEmptylValid(TextInputLayout layoutINput, EditText editText,String error ){
+        String text = editText.getText().toString().trim();
+        if(TextUtils.isEmpty(text)){
+            layoutINput.setError(error);
+            editText.requestFocus();
+            return false;
+        }else
+            return true;
+    }
+
+    public boolean isEmptylValid(TextInputLayout layoutINput, EditText editText, @StringRes int error){
+        String text = editText.getText().toString().trim();
+        if(TextUtils.isEmpty(text)){
+            layoutINput.setError(context.getString(error));
+            editText.requestFocus();
+            return false;
+        }else
+            return true;
     }
 
     public boolean isEmailValid(String email, TextInputLayout mEmailInputLayout, EditText mEemail ){

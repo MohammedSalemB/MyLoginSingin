@@ -7,4 +7,9 @@
     <string name="login_dialog_message">Loading..</string>
     <string name="login_dialog_title">wait..</string>
     <string name="login_dialog_cancle_button">Cancle</string>
+    <string name="faild_login">UserName or Password wrong,,try again</string>
+    <string name="success_login">LoginSussess</string>
+    <string name="userName_empty">UserName filed is require</string>
+    <string name="firstName_empty">UserName filed is require</string>
+    <string name="lastName_empty">UserName filed is require</string>
 </resources>

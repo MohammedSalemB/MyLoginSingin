@@ -1,9 +1,13 @@
 package com.example.capps.mylogintest.login;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by Gg on 4/23/2017.
  */
 
-public class LoginFrag extends Fragment implements View.OnClickListener {
+public class LoginFrag extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Boolean> {
 
     private final String DIALOG_FRAG="dialog_frag";
     private MyDialog mDialog;
@@ -45,12 +49,13 @@ public class LoginFrag extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_linear_frag,container,false);
+//        View view = inflater.inflate(R.layout.login_linear_frag,container,false);
+        View view = inflater.inflate(R.layout.login_relative_frag,container,false);
+
         ButterKnife.bind(this,view);
         myUtils = MyUtils.getInstance(getContext());
 
-        mSubmit.setOnClickListener(this);
-        mForgetPassword.setOnClickListener(this);
+        setListners();
 
 //        if (mSubmit == null)
 //            mSubmit = (Button) view.findViewById(R.id.submit_button);
@@ -59,12 +64,9 @@ public class LoginFrag extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-
+    private void setListners() {
+        mSubmit.setOnClickListener(this);
+        mForgetPassword.setOnClickListener(this);
     }
 
     private boolean check_value_valid(){
@@ -88,6 +90,9 @@ public class LoginFrag extends Fragment implements View.OnClickListener {
         if(check_value_valid()){
             showDialog();
             //network checking
+            Bundle arge = new Bundle();
+
+            getActivity().getSupportLoaderManager().restartLoader(8,arge,this).forceLoad();
         }
 
     }
@@ -156,5 +161,59 @@ public class LoginFrag extends Fragment implements View.OnClickListener {
 
 //        mDialog.setCancelable(false);
         mDialog.show(getChildFragmentManager(),DIALOG_FRAG);
+    }
+
+    @Override
+    public Loader<Boolean> onCreateLoader(int id, Bundle args) {
+
+        MyAnysTask task = new MyAnysTask(getActivity(),args);
+        return task;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
+
+        if(mDialog != null)
+            mDialog.dismiss();
+        if (data){
+            onLoginSuccess();
+        }
+        else
+            onLoginFaild();
+    }
+
+    private void onLoginFaild() {
+        Toast.makeText(getActivity(), R.string.faild_login,Toast.LENGTH_SHORT).show();
+    }
+
+    private void onLoginSuccess() {
+        mEemail.setText("");
+        mPassword.setText("");
+        //next step
+        Toast.makeText(getActivity(),R.string.success_login,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Boolean> loader) {
+
+    }
+
+
+    static class MyAnysTask extends AsyncTaskLoader<Boolean>{
+
+        public MyAnysTask(Context context,Bundle arag) {
+            super(context);
+        }
+
+        @Override
+        public Boolean loadInBackground() {
+
+            try {
+                Thread.sleep(3500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
     }
 }

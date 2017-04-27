@@ -39,7 +39,7 @@
                 android:id="@id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:hint="Password"
                 android:textSize="22sp"
                 android:maxLines="1"
@@ -59,6 +59,7 @@
             android:layout_marginTop="15dp"/>
 
         <TextView
+            android:id="@id/forget_password_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/submit_button"

@@ -8,4 +8,7 @@
     <color name="light_red">#fc1d69</color>
     <color name="white">#ffffff</color>
     <color name="half_white">#f7f7f7</color>
+
+    <color name="limon">#7c8959</color>
+    <color name="light_limon">#889c52</color>
 </resources>

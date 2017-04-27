@@ -80,7 +80,7 @@ public class MyDialog extends DialogFragment {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO: 4/23/2017 cancel network login
+                            // TODO: 4/23/2017 cancel network login using interface with method done state(completed,canceled),@Nullable data
                             dialog.dismiss();
                         }
                     });

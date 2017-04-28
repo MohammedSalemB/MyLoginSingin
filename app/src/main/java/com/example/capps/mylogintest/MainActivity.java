@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements LoginFrag.LoginIn
 
     }
 
+    /*Implement LoginInterface
+    * to open SignIn Fragment instead of Login Fragment */
 
     @Override
     public void openSignInFrag() {

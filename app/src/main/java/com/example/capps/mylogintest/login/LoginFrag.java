@@ -52,6 +52,7 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     Button mSubmit;
 
 
+    /*check if Host Activity are Implement LoginInterface*/
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -88,12 +89,15 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
         return view;
     }
 
+
     private void setListners() {
         mSubmit.setOnClickListener(this);
         mForgetPassword.setOnClickListener(this);
         mSignin.setOnClickListener(this);
     }
 
+    /*check all filed in this frag..
+    * put whatever validation you want here*/
     private boolean check_value_valid(){
 
         mEmailInputLayout.setError(null);
@@ -109,6 +113,14 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
 
     }
 
+    /*try login User..
+    * steps:
+    * check value is ok or not
+    *   show dialog if value ok
+    *   check userlogin in AsyncLoader
+
+
+    *       here you can add all data to check on server to the bundle*/
     private void attemptLogin(){
         if(check_value_valid()){
             showDialog();
@@ -179,10 +191,12 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
         }
     }
 
+    /*request host to replace this frag(LoginFrag) by SignInFrag*/
     private void showSignInFrag() {
         host.openSignInFrag();
     }
 
+    /*Show Dialog of forgetPassword*/
     private void showForgetPasswordDialog() {
         mDialog = MyDialog.newInstance(
                 "",
@@ -200,9 +214,12 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
         return task;
     }
 
+    /*hide Dialog progress loading
+    * fire success login or faild login method*/
     @Override
     public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
 
+        //you can change the method/way of check result as you want
         if(mDialog != null)
             mDialog.dismiss();
         if (data){

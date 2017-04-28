@@ -89,6 +89,8 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
         mSubmit.setOnClickListener(this);
     }
 
+    /*check all filed in this frag..
+    * put whatever validation you want here*/
     private boolean check_value_valid(){
 
         mUserNameInputLayout.setError(null);
@@ -122,6 +124,14 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
 
     }
 
+    /*try SignIn User..
+  * steps:
+  * check value is ok or not
+  *   show dialog if value ok
+  *   check userSignin in AsyncLoader
+
+
+  *       here you can add all data to check on server to the bundle*/
     private void attemptSignin(){
         if(check_value_valid()){
             showDialog();
@@ -166,6 +176,8 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
         return new MyAnysTask(getActivity(),args);
     }
 
+    /*hide Dialog progress loading
+    * fire success login or faild login method*/
     @Override
     public void onLoadFinished(Loader<String> loader, String data) {
 

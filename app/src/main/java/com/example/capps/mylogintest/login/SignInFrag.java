@@ -29,13 +29,16 @@ import butterknife.ButterKnife;
  * LoaderManager.LoaderCallbacks<Object>
  */
 
-public class SignInFrag extends Fragment implements View.OnClickListener,LoaderManager.LoaderCallbacks<String> {
+public class SignInFrag extends Fragment implements View.OnClickListener
+        ,MyDialog.MyDialogListner
+        ,LoaderManager.LoaderCallbacks<String> {
 
 
 
     private final String DIALOG_FRAG="dialog_frag";
     private MyDialog mDialog;
     private MyUtils myUtils;
+    private MyAnysTask mTask;
 
     @BindView(R.id.username_edit_text)
     EditText mUserName;
@@ -172,8 +175,8 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
 
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
-
-        return new MyAnysTask(getActivity(),args);
+        mTask = new MyAnysTask(getActivity(),args);
+        return  mTask;
     }
 
     /*hide Dialog progress loading
@@ -203,12 +206,18 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
     }
 
     private void onSignFaild(String failedMessage) {
-        Toast.makeText(getActivity(),failedMessage,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),"No Account found",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLoaderReset(Loader<String> loader) {
 
+    }
+
+    @Override
+    public void isUserCancelDialog(boolean canceled) {
+        if (canceled && mTask != null )
+            mTask.cancelLoad();
     }
 
 

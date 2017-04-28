@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,12 +45,17 @@ public class MyDialog extends DialogFragment {
     }
 
 
+    /*Check if host implement MyDialogListner interface
+    * so we can callback the host
+    *  */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof MyDialogListner)
             mHost = (MyDialogListner) parentFragment;
+        else
+            throw new ClassCastException("Host Must Implement MyDialogListner  Interface");
     }
 
     @Override
@@ -58,6 +64,8 @@ public class MyDialog extends DialogFragment {
         Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof MyDialogListner)
             mHost = (MyDialogListner) parentFragment;
+        else
+            throw new ClassCastException("Host Must Implement MyDialogListner  Interface");
     }
 
     @Override
@@ -82,6 +90,7 @@ public class MyDialog extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // TODO: 4/23/2017 cancel network login using interface with method done state(completed,canceled),@Nullable data
+                            mHost.isUserCancelDialog(true);
                             dialog.dismiss();
                         }
                     });
@@ -120,9 +129,8 @@ public class MyDialog extends DialogFragment {
     }
 
 
-
-
-    interface MyDialogListner{
-        void dialogDone(String email);
+    /*callback the host when user cancel */
+    public interface MyDialogListner{
+        void isUserCancelDialog(boolean canceled);
     }
 }

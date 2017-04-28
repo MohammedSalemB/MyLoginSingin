@@ -28,12 +28,13 @@ import butterknife.ButterKnife;
  * Created by Gg on 4/23/2017.
  */
 
-public class LoginFrag extends Fragment implements View.OnClickListener, LoaderManager.LoaderCallbacks<Boolean> {
+public class LoginFrag extends Fragment implements View.OnClickListener,MyDialog.MyDialogListner, LoaderManager.LoaderCallbacks<Boolean> {
 
     private final String DIALOG_FRAG="dialog_frag";
     private MyDialog mDialog;
     private MyUtils myUtils;
     LoginInterface host;
+    private MyAnysTask mTask;
 
     @BindView(R.id.email_edit_text)
     EditText mEemail;
@@ -210,8 +211,9 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     @Override
     public Loader<Boolean> onCreateLoader(int id, Bundle args) {
 
-        MyAnysTask task = new MyAnysTask(getActivity(),args);
-        return task;
+
+        mTask = new MyAnysTask(getActivity(),args);
+        return mTask;
     }
 
     /*hide Dialog progress loading
@@ -243,6 +245,13 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     @Override
     public void onLoaderReset(Loader<Boolean> loader) {
 
+    }
+
+    /*Cancel network Operator when user click cancel in progress Loading Dialog*/
+    @Override
+    public void isUserCancelDialog(boolean canceled) {
+        if (canceled && mTask != null )
+            mTask.cancelLoad();
     }
 
 

@@ -49,7 +49,7 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
     @BindView(R.id.password_edit_text)
     EditText mPassword;
     @BindView(R.id.confirm_password_edit_text)
-    TextView mConfirmPassword;
+    EditText mConfirmPassword;
 
     @BindView(R.id.username_text_input_layout)
     TextInputLayout mUserNameInputLayout;
@@ -102,8 +102,6 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
         mConfirmPasswordInputLayout.setError(null);
 
 
-        String email = mEemail.getText().toString();
-        String password = mPassword.getText().toString();
 
         if(!myUtils.isEmptylValid(mUserNameInputLayout,mUserName,R.string.userName_empty))
             return false;
@@ -111,11 +109,15 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
             return false;
         if(!myUtils.isEmptylValid(mLastNameInputLayout,mLastName,R.string.lastName_empty))
             return false;
-
-        //Complete....
-        if(!myUtils.isEmailValid(email,mEmailInputLayout,mEemail))
+        if(!myUtils.isEmptylValid(mMobileInputLayout,mMobile,R.string.mobile_empty))
             return false;
-        else if(!myUtils.isPasswordValid(password,mPasswordInputLayout,mPassword))
+
+
+        if(!myUtils.isEmailValid(mEmailInputLayout,mEemail))
+            return false;
+        else if(!myUtils.isPasswordValid(mPasswordInputLayout,mPassword))
+            return false;
+        else if(!myUtils.isConfirmPasswordValid(mPassword.getText().toString(),mPasswordInputLayout,mPassword))
             return false;
         else
             return true;
@@ -127,7 +129,8 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
             showDialog();
             //network checking
             Bundle arge = new Bundle();
-
+            //put your values in bundle
+            // ...
             getActivity().getSupportLoaderManager().restartLoader(8,arge,this).forceLoad();
         }
 
@@ -144,36 +147,6 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
     }
 
 
-//    private boolean isEmailValid(String email){
-//        email = email.trim();
-//        if(TextUtils.isEmpty(email)){
-//            mEmailInputLayout.setError(getResources().getString(R.string.empty_email));
-//            mEemail.requestFocus();
-//            return false;
-//        }else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-////        }else if(!email.matches("Constant.EMAIL_PATTERENT")){
-//            mEmailInputLayout.setError(getResources().getString(R.string.non_valid_email));
-//            mEemail.requestFocus();
-//            return false;
-//        }else
-//            return true;
-//
-//    }
-//
-//    private boolean isPasswordValid(String password){
-//        if(TextUtils.isEmpty(password)){
-//            mEmailInputLayout.setError(getResources().getString(R.string.empty_password));
-//            mPassword.requestFocus();
-//            return false;
-//        }else if(password.length() < 8 ){
-//            mEmailInputLayout.setError(getResources().getString(R.string.non_valid_password));
-//            mPassword.requestFocus();
-//            return false;
-//        }else
-//            return true;
-//
-//    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -186,21 +159,13 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
         }
     }
 
-    private void showForgetPasswordDialog() {
-        mDialog = MyDialog.newInstance(
-                "",
-                "",
-                R.layout.forget_password_dialog_frag);
 
-//        mDialog.setCancelable(false);
-        mDialog.show(getChildFragmentManager(),DIALOG_FRAG);
-    }
+
 
     @Override
     public Loader<Boolean> onCreateLoader(int id, Bundle args) {
 
-        LoginFrag.MyAnysTask task = new LoginFrag.MyAnysTask(getActivity(),args);
-        return task;
+        return new MyAnysTask(getActivity(),args);
     }
 
     @Override
@@ -209,21 +174,26 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
         if(mDialog != null)
             mDialog.dismiss();
         if (data){
-            onLoginSuccess();
+            onSignSuccess();
         }
         else
-            onLoginFaild();
+            onSignFaild();
     }
 
-    private void onLoginFaild() {
-        Toast.makeText(getActivity(), R.string.faild_login,Toast.LENGTH_SHORT).show();
-    }
-
-    private void onLoginSuccess() {
+    private void onSignSuccess() {
+        mUserName.setText("");
+        mFirstName.setText("");
+        mLastName.setText("");
+        mMobile.setText("");
         mEemail.setText("");
         mPassword.setText("");
+        mConfirmPassword.setText("");
         //next step
         Toast.makeText(getActivity(),R.string.success_login,Toast.LENGTH_SHORT).show();
+    }
+
+    private void onSignFaild() {
+        Toast.makeText(getActivity(), R.string.faild_login,Toast.LENGTH_SHORT).show();
     }
 
     @Override

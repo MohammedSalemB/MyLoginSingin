@@ -47,8 +47,8 @@ public class MyUtils {
             return true;
     }
 
-    public boolean isEmailValid(String email, TextInputLayout mEmailInputLayout, EditText mEemail ){
-        email = email.trim();
+    public boolean isEmailValid(TextInputLayout mEmailInputLayout, EditText mEemail ){
+        String email = mEemail.getText().toString().trim();
         if(TextUtils.isEmpty(email)){
             mEmailInputLayout.setError(context.getResources().getString(R.string.empty_email));
             mEemail.requestFocus();
@@ -63,14 +63,28 @@ public class MyUtils {
 
     }
 
-    public  boolean isPasswordValid(String password, TextInputLayout mPasswordInputLayout, EditText mPassword){
-        if(TextUtils.isEmpty(password)){
+    public  boolean isPasswordValid( TextInputLayout mPasswordInputLayout, EditText mPassword){
+        if(TextUtils.isEmpty(mPassword.getText().toString())){
             mPasswordInputLayout.setError(context.getResources().getString(R.string.empty_password));
             mPassword.requestFocus();
             return false;
-        }else if(password.length() < 8 ){
+        }else if(mPassword.getText().toString().length() < 8 ){
             mPasswordInputLayout.setError(context.getResources().getString(R.string.non_valid_password));
             mPassword.requestFocus();
+            return false;
+        }else
+            return true;
+
+    }
+
+    public  boolean isConfirmPasswordValid(String password, TextInputLayout mPasswordConfirmInputLayout, EditText mConfirmPassword){
+        if(TextUtils.isEmpty(mConfirmPassword.getText().toString())){
+            mPasswordConfirmInputLayout.setError(context.getResources().getString(R.string.empty_confirm_password));
+            mConfirmPassword.requestFocus();
+            return false;
+        }else if(password.compareTo(mConfirmPassword.getText().toString()) != 0 ){
+            mPasswordConfirmInputLayout.setError(context.getResources().getString(R.string.non_valid_password));
+            mConfirmPassword.requestFocus();
             return false;
         }else
             return true;

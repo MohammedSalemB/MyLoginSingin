@@ -2,14 +2,16 @@
     <string name="app_name">MyLoginTest</string>
     <string name="empty_email">Email is Require</string>
     <string name="non_valid_email">Email not valid..try again</string>
-    <string name="empty_password">Ppassword valid is required</string>
+    <string name="empty_password">Password valid is required</string>
     <string name="non_valid_password">short password..try more then 7 charcaters</string>
     <string name="login_dialog_message">Loading..</string>
     <string name="login_dialog_title">wait..</string>
     <string name="login_dialog_cancle_button">Cancle</string>
     <string name="faild_login">UserName or Password wrong,,try again</string>
-    <string name="success_login">LoginSussess</string>
-    <string name="userName_empty">UserName filed is require</string>
-    <string name="firstName_empty">UserName filed is require</string>
-    <string name="lastName_empty">UserName filed is require</string>
+    <string name="success_login">Login Sussess</string>
+    <string name="userName_empty">User Name filed is require</string>
+    <string name="firstName_empty">First Name filed is require</string>
+    <string name="lastName_empty">Last Name filed is require</string>
+    <string name="empty_confirm_password">Confirm Password filed is require</string>
+    <string name="mobile_empty">Mobile filed is require</string>
 </resources>

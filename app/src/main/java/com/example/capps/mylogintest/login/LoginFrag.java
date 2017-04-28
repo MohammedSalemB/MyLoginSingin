@@ -74,12 +74,10 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
         mEmailInputLayout.setError(null);
         mPasswordInputLayout.setError(null);
 
-        String email = mEemail.getText().toString();
-        String password = mPassword.getText().toString();
 
-        if(!myUtils.isEmailValid(email,mEmailInputLayout,mEemail))
+        if(!myUtils.isEmailValid(mEmailInputLayout,mEemail))
             return false;
-        else if(!myUtils.isPasswordValid(password,mPasswordInputLayout,mPassword))
+        else if(!myUtils.isPasswordValid(mPasswordInputLayout,mPassword))
             return false;
         else
             return true;

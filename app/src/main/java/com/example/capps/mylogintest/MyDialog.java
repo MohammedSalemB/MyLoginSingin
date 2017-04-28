@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 
 /**
@@ -85,9 +86,15 @@ public class MyDialog extends DialogFragment {
                         }
                     });
 
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             return dialog;
-        }else
-            return super.onCreateDialog(savedInstanceState);
+        }else{
+
+            Dialog dialog = super.onCreateDialog(savedInstanceState);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            return dialog;
+        }
+
     }
 
     @Nullable
@@ -102,9 +109,7 @@ public class MyDialog extends DialogFragment {
             view.findViewById(R.id.submit_button).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if ( myUtils.isEmailValid(email.getText().toString(),
-                            layoutEmail,
-                            email) )
+                    if ( myUtils.isEmailValid(layoutEmail,email) )
                     dismiss();
                 }
             });

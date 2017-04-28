@@ -13,5 +13,6 @@
     <string name="firstName_empty">First Name filed is require</string>
     <string name="lastName_empty">Last Name filed is require</string>
     <string name="empty_confirm_password">Confirm Password filed is require</string>
+    <string name="not_equal_confirm_password">Password &amp; Confirm Password not matching</string>
     <string name="mobile_empty">Mobile filed is require</string>
 </resources>

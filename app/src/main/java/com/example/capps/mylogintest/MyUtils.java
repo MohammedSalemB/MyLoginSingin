@@ -3,6 +3,9 @@ package com.example.capps.mylogintest;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.EditText;
@@ -83,12 +86,26 @@ public class MyUtils {
             mConfirmPassword.requestFocus();
             return false;
         }else if(password.compareTo(mConfirmPassword.getText().toString()) != 0 ){
-            mPasswordConfirmInputLayout.setError(context.getResources().getString(R.string.non_valid_password));
+            mPasswordConfirmInputLayout.setError(context.getResources().getString(R.string.not_equal_confirm_password));
             mConfirmPassword.requestFocus();
             return false;
         }else
             return true;
 
+    }
+
+
+    /**
+     *replace Fragment with another frag
+     *
+     */
+    public static void addOrReplaceFragment(FragmentManager manager, Fragment newFragment, int layoutContener, boolean addToBackStack, String tag) {
+
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(layoutContener,newFragment,tag);
+        if (addToBackStack)
+            transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

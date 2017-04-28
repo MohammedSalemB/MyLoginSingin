@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.capps.mylogintest.login.LoginFrag;
+import com.example.capps.mylogintest.login.SignInFrag;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginFrag.LoginInterface {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,14 +15,15 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main);
 
         if (savedInstanceState ==null)
-            setFragment(new LoginFrag());
+            MyUtils.addOrReplaceFragment(getSupportFragmentManager(),new LoginFrag()
+                    ,android.R.id.content,false,null);
 
     }
 
 
-    private void setFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction()
-                .replace(android.R.id.content,fragment)
-                .commit();
+    @Override
+    public void openSignInFrag() {
+        MyUtils.addOrReplaceFragment(getSupportFragmentManager(),new SignInFrag()
+        ,android.R.id.content,true,null);
     }
 }

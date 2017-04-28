@@ -96,7 +96,6 @@
         android:id="@id/password_text_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:passwordToggleEnabled="false"
         android:textColorHint="@color/half_white">
         <EditText
             android:id="@id/password_edit_text"
@@ -113,7 +112,6 @@
         android:id="@id/confirm_password_text_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:passwordToggleEnabled="false"
         android:textColorHint="@color/half_white">
         <EditText
             android:id="@id/confirm_password_edit_text"

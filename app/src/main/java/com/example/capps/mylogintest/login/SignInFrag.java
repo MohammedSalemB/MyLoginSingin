@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * LoaderManager.LoaderCallbacks<Object>
  */
 
-public class SignInFrag extends Fragment implements View.OnClickListener,LoaderManager.LoaderCallbacks<Boolean> {
+public class SignInFrag extends Fragment implements View.OnClickListener,LoaderManager.LoaderCallbacks<String> {
 
 
 
@@ -73,16 +74,13 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
+//        View view = inflater.inflate(R.layout.signin_relative_frag,container,false);
         View view = inflater.inflate(R.layout.signin_linear_frag,container,false);
 
         ButterKnife.bind(this,view);
         myUtils = MyUtils.getInstance(getContext());
 
         setListners();
-
-//        if (mSubmit == null)
-//            mSubmit = (Button) view.findViewById(R.id.submit_button);
-
 
         return view;
     }
@@ -117,7 +115,7 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
             return false;
         else if(!myUtils.isPasswordValid(mPasswordInputLayout,mPassword))
             return false;
-        else if(!myUtils.isConfirmPasswordValid(mPassword.getText().toString(),mPasswordInputLayout,mPassword))
+        else if(!myUtils.isConfirmPasswordValid(mPassword.getText().toString(),mPasswordInputLayout,mConfirmPassword))
             return false;
         else
             return true;
@@ -163,24 +161,24 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
 
 
     @Override
-    public Loader<Boolean> onCreateLoader(int id, Bundle args) {
+    public Loader<String> onCreateLoader(int id, Bundle args) {
 
         return new MyAnysTask(getActivity(),args);
     }
 
     @Override
-    public void onLoadFinished(Loader<Boolean> loader, Boolean data) {
+    public void onLoadFinished(Loader<String> loader, String data) {
 
         if(mDialog != null)
             mDialog.dismiss();
-        if (data){
-            onSignSuccess();
+        if (!TextUtils.isEmpty(data)){
+            onSignSuccess(data);
         }
         else
-            onSignFaild();
+            onSignFaild(data);
     }
 
-    private void onSignSuccess() {
+    private void onSignSuccess(String token) {
         mUserName.setText("");
         mFirstName.setText("");
         mLastName.setText("");
@@ -192,31 +190,31 @@ public class SignInFrag extends Fragment implements View.OnClickListener,LoaderM
         Toast.makeText(getActivity(),R.string.success_login,Toast.LENGTH_SHORT).show();
     }
 
-    private void onSignFaild() {
-        Toast.makeText(getActivity(), R.string.faild_login,Toast.LENGTH_SHORT).show();
+    private void onSignFaild(String failedMessage) {
+        Toast.makeText(getActivity(),failedMessage,Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onLoaderReset(Loader<Boolean> loader) {
+    public void onLoaderReset(Loader<String> loader) {
 
     }
 
 
-    static class MyAnysTask extends AsyncTaskLoader<Boolean> {
+    static class MyAnysTask extends AsyncTaskLoader<String> {
 
         public MyAnysTask(Context context, Bundle arag) {
             super(context);
         }
 
         @Override
-        public Boolean loadInBackground() {
+        public String loadInBackground() {
 
             try {
                 Thread.sleep(3500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return false;
+            return null;
         }
     }
 }

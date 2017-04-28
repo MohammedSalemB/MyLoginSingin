@@ -75,6 +75,15 @@
                 android:padding="5dp"
                 android:textColor="@color/half_white"
                 />
+            <TextView
+                android:id="@id/signin_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="create account"
+                android:padding="5dp"
+                android:textColor="@color/half_white"
+                />
 
         </LinearLayout>
     </ScrollView>

@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/email_text_input_layout"
-            app:passwordToggleEnabled="false">
+            >
             <EditText
                 android:id="@id/password_edit_text"
                 android:layout_width="match_parent"
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/password_text_input_layout"
-            app:passwordToggleEnabled="false">
+            >
             <EditText
                 android:id="@id/confirm_password_edit_text"
                 android:layout_width="match_parent"

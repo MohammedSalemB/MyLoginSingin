@@ -1,5 +1,6 @@
 package com.example.capps.mylogintest.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     private final String DIALOG_FRAG="dialog_frag";
     private MyDialog mDialog;
     private MyUtils myUtils;
+    LoginInterface host;
 
     @BindView(R.id.email_edit_text)
     EditText mEemail;
@@ -39,6 +41,9 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     EditText mPassword;
     @BindView(R.id.forget_password_text_view)
     TextView mForgetPassword;
+    @BindView(R.id.signin_text_view)
+    TextView mSignin;
+
     @BindView(R.id.email_text_input_layout)
     TextInputLayout mEmailInputLayout;
     @BindView(R.id.password_text_input_layout)
@@ -46,11 +51,30 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     @BindView(R.id.submit_button)
     Button mSubmit;
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof LoginInterface)
+            host = (LoginInterface) context;
+        else
+            throw new ClassCastException("Host Must Implement LoginInterface. ");
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof LoginInterface)
+            host = (LoginInterface) activity;
+        else
+            throw new ClassCastException("Host Must Implement LoginInterface. ");
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.login_linear_frag,container,false);
-        View view = inflater.inflate(R.layout.login_relative_frag,container,false);
+        View view = inflater.inflate(R.layout.login_linear_frag,container,false);
+//        View view = inflater.inflate(R.layout.login_relative_frag,container,false);
 
         ButterKnife.bind(this,view);
         myUtils = MyUtils.getInstance(getContext());
@@ -67,6 +91,7 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
     private void setListners() {
         mSubmit.setOnClickListener(this);
         mForgetPassword.setOnClickListener(this);
+        mSignin.setOnClickListener(this);
     }
 
     private boolean check_value_valid(){
@@ -145,10 +170,17 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
             case R.id.forget_password_text_view:
                 showForgetPasswordDialog();
                 break;
+            case R.id.signin_text_view:
+                showSignInFrag();
+                break;
             default:
                 Toast.makeText(getContext(),"Error_string", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    private void showSignInFrag() {
+        host.openSignInFrag();
     }
 
     private void showForgetPasswordDialog() {
@@ -213,5 +245,11 @@ public class LoginFrag extends Fragment implements View.OnClickListener, LoaderM
             }
             return false;
         }
+    }
+
+
+
+    public interface LoginInterface{
+         void openSignInFrag();
     }
 }
